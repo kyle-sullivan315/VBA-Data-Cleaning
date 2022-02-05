@@ -1,0 +1,27 @@
+Sub findEmployee()
+    
+    RowCount = 0
+    rowcount2 = 0
+    rowcount3 = 0
+    
+    With Worksheets("Template").Range("A1")
+        Do Until .Offset(RowCount, 0).Value = ""
+        current_search = .Offset(RowCount, 0).Value
+        With Worksheets("dirty").Range("K1")
+            rowcount2 = 0
+            Do Until .Offset(rowcount2, 0).Value = ""
+                If .Offset(rowcount2, 0).Value = current_search Then
+                    .Offset(rowcount2, 0).EntireRow.Copy
+                    Sheets("clean").Range("A1").Offset(rowcount3, 0).PasteSpecial Paste:=xlPasteValues
+                    rowcount3 = rowcount3 + 1
+                    Exit Do
+                Else
+                    rowcount2 = rowcount2 + 1
+                End If
+                Loop
+        End With
+            RowCount = RowCount + 1
+        Loop
+    End With
+    
+End Sub
